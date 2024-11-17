@@ -1,9 +1,9 @@
-import { PrismaClient, Prisma } from "@prisma/client";
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { UsersDBRepository } from "./user.repository";
-import { UserProps } from "../models/user.model";
+import { PrismaClient, Prisma } from '@prisma/client';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { UsersDBRepository } from './user.repository';
+import { UserProps } from '../models/user.model';
 
-vi.mock("@prisma/client", () => {
+vi.mock('@prisma/client', () => {
   const Decimal = vi.fn().mockImplementation((value) => ({
     toNumber: () => Number(value),
   }));
@@ -24,7 +24,7 @@ vi.mock("@prisma/client", () => {
   };
 });
 
-describe("UsersDBRepository", () => {
+describe('UsersDBRepository', () => {
   let repository: UsersDBRepository;
   let mockPrisma: any;
 
@@ -34,20 +34,20 @@ describe("UsersDBRepository", () => {
     mockPrisma = (repository as any).prisma;
   });
 
-  describe("create", () => {
-    it("deve criar um novo usuário", async () => {
+  describe('create', () => {
+    it('deve criar um novo usuário', async () => {
       const mockUser: UserProps = {
-        id: "1",
-        name: "User 1",
-        email: "user1@example.com",
-        password: "password123",
+        id: '1',
+        name: 'User 1',
+        email: 'user1@example.com',
+        password: 'password123',
       };
 
-      mockPrisma.user.create.mockResolvedValue({ id: "1" });
+      mockPrisma.user.create.mockResolvedValue({ id: '1' });
 
       const result = await repository.create(mockUser);
 
-      expect(result).toEqual({ id: "1" });
+      expect(result).toEqual({ id: '1' });
       expect(mockPrisma.user.create).toHaveBeenCalledWith({
         data: {
           name: mockUser.name,
@@ -58,50 +58,50 @@ describe("UsersDBRepository", () => {
     });
   });
 
-  describe("getById", () => {
-    it("deve retornar um usuário pelo ID", async () => {
+  describe('getById', () => {
+    it('deve retornar um usuário pelo ID', async () => {
       const mockUser: UserProps = {
-        id: "1",
-        name: "User 1",
-        email: "user1@example.com",
-        password: "password123",
+        id: '1',
+        name: 'User 1',
+        email: 'user1@example.com',
+        password: 'password123',
       };
       mockPrisma.user.findUnique.mockResolvedValue(mockUser);
 
-      const result = await repository.getById("1");
+      const result = await repository.getById('1');
       expect(result).toEqual(mockUser);
 
       expect(mockPrisma.user.findUnique).toHaveBeenCalledWith({
-        where: { id: "1" },
+        where: { id: '1' },
       });
     });
 
-    it("deve retornar null se o usuário não for encontrado", async () => {
+    it('deve retornar null se o usuário não for encontrado', async () => {
       mockPrisma.user.findUnique.mockResolvedValue(null);
 
-      const result = await repository.getById("1");
+      const result = await repository.getById('1');
 
       expect(result).toBeNull();
       expect(mockPrisma.user.findUnique).toHaveBeenCalledWith({
-        where: { id: "1" },
+        where: { id: '1' },
       });
     });
   });
 
-  describe("getAll", () => {
-    it("deve retornar todos os usuários", async () => {
+  describe('getAll', () => {
+    it('deve retornar todos os usuários', async () => {
       const mockUsers: UserProps[] = [
         {
-          id: "1",
-          name: "User 1",
-          email: "user1@example.com",
-          password: "password123",
+          id: '1',
+          name: 'User 1',
+          email: 'user1@example.com',
+          password: 'password123',
         },
         {
-          id: "2",
-          name: "User 2",
-          email: "user2@example.com",
-          password: "password456",
+          id: '2',
+          name: 'User 2',
+          email: 'user2@example.com',
+          password: 'password456',
         },
       ];
       mockPrisma.user.findMany.mockResolvedValue(mockUsers);
@@ -113,26 +113,26 @@ describe("UsersDBRepository", () => {
     });
   });
 
-  describe("delete", () => {
-    it("deve excluir um usuário pelo ID", async () => {
-      mockPrisma.user.delete.mockResolvedValue({ id: "1" });
+  describe('delete', () => {
+    it('deve excluir um usuário pelo ID', async () => {
+      mockPrisma.user.delete.mockResolvedValue({ id: '1' });
 
-      const result = await repository.delete("1");
+      const result = await repository.delete('1');
 
       expect(result).toBe(true);
       expect(mockPrisma.user.delete).toHaveBeenCalledWith({
-        where: { id: "1" },
+        where: { id: '1' },
       });
     });
 
-    it("deve retornar false se o usuário não for encontrado para exclusão", async () => {
-      mockPrisma.user.delete.mockRejectedValue(new Error("User not found"));
+    it('deve retornar false se o usuário não for encontrado para exclusão', async () => {
+      mockPrisma.user.delete.mockRejectedValue(new Error('User not found'));
 
-      const result = await repository.delete("1");
+      const result = await repository.delete('1');
 
       expect(result).toBe(false);
       expect(mockPrisma.user.delete).toHaveBeenCalledWith({
-        where: { id: "1" },
+        where: { id: '1' },
       });
     });
   });

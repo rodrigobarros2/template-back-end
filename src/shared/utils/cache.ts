@@ -1,5 +1,5 @@
-import redisClient from "../../main/config/redis";
-import { logger } from "./logger";
+import redisClient from '../../main/config/redis';
+import { logger } from './logger';
 
 export const setCache = async <T>(key: string, value: T, ttl: number = 3600): Promise<void> => {
   try {

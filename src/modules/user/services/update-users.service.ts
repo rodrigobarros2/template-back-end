@@ -1,5 +1,5 @@
-import { HttpCode } from "../../../shared/enum/httpCode.enum";
-import { UserProps, UsersRepository } from "../models/user.model";
+import { HttpCode } from '../../../shared/enum/httpCode.enum';
+import { UserProps, UsersRepository } from '../models/user.model';
 
 export class UpdateUserService {
   constructor(private readonly userRepository: UsersRepository) {}
@@ -8,7 +8,7 @@ export class UpdateUserService {
     const existingUser = await this.userRepository.getById(id);
 
     if (!existingUser) {
-      throw { status: HttpCode.NOT_FOUND, message: "Usuário não encontrado" };
+      throw { status: HttpCode.NOT_FOUND, message: 'Usuário não encontrado' };
     }
 
     const updatedUserProps: UserProps = {
@@ -18,7 +18,10 @@ export class UpdateUserService {
 
     const updatedUser = await this.userRepository.update(id, updatedUserProps);
     if (!updatedUser) {
-      throw { status: HttpCode.INTERNAL_SERVER_ERROR, message: "Falha na atualização do usuário" };
+      throw {
+        status: HttpCode.INTERNAL_SERVER_ERROR,
+        message: 'Falha na atualização do usuário',
+      };
     }
     return updatedUser;
   }

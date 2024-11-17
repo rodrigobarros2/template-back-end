@@ -1,6 +1,5 @@
 ## Rodando localmente
 
-
 Entre no diretório do projeto
 
 Instale as dependências
@@ -21,10 +20,8 @@ Instale as dependências
   npx prisma generate
 ```
 
-
 Inicie o servidor
 
 ```bash
   npm run dev
 ```
-

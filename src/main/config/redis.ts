@@ -1,24 +1,25 @@
-import { createClient } from "redis";
-import { logger } from "../../shared/utils/logger";
+import { createClient } from 'redis';
+import { logger } from '../../shared/utils/logger';
+import env from './env';
 
 const redisClient = createClient({
-  url: process.env.REDIS_URL,
-  password: process.env.REDIS_PASSWORD,
+  url: env.redisUrl,
+  password: env.redisPassword,
 });
 
-redisClient.on("connect", () => {
-  logger.info("Conectado ao Redis!");
+redisClient.on('connect', () => {
+  logger.info('Conectado ao Redis!');
 });
 
-redisClient.on("error", (err) => {
-  console.error("Erro no Redis:", err);
+redisClient.on('error', (err) => {
+  logger.info('Erro no Redis:', err);
 });
 
 (async () => {
   try {
     await redisClient.connect();
   } catch (error) {
-    console.error("Erro ao conectar ao Redis:", error);
+    logger.info('Erro ao conectar ao Redis:', error);
   }
 })();
 

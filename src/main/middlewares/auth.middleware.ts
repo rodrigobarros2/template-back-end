@@ -1,8 +1,8 @@
-import prisma from "../../database/prismaClient";
-import { Request, Response, NextFunction } from "express";
-import { verifyToken } from "../../shared/utils/jwt";
-import { UserRole } from "../../shared/enum/roles.enum";
-import { HttpCode } from "../../shared/enum/httpCode.enum";
+import prisma from '../../database/prismaClient';
+import { Request, Response, NextFunction } from 'express';
+import { verifyToken } from '../../shared/utils/jwt';
+import { UserRole } from '../../shared/enum/roles.enum';
+import { HttpCode } from '../../shared/enum/httpCode.enum';
 
 interface User {
   id: string;
@@ -12,10 +12,10 @@ interface User {
 }
 
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(" ")[1];
+  const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
-    return res.status(HttpCode.UNAUTHORIZED).json({ error: "Token não fornecido" });
+    return res.status(HttpCode.UNAUTHORIZED).json({ error: 'Token não fornecido' });
   }
 
   try {
@@ -26,7 +26,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     });
 
     if (!user) {
-      return res.status(HttpCode.UNAUTHORIZED).json({ error: "Usuário não encontrado" });
+      return res.status(HttpCode.UNAUTHORIZED).json({ error: 'Usuário não encontrado' });
     }
 
     req.user = {
@@ -38,6 +38,6 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
 
     next();
   } catch (error) {
-    return res.status(HttpCode.UNAUTHORIZED).json({ error: "Invalid or expired token" });
+    return res.status(HttpCode.UNAUTHORIZED).json({ error: 'Invalid or expired token' });
   }
 };

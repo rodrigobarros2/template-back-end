@@ -1,5 +1,5 @@
-import prisma from "../../../database/prismaClient";
-import { UserProps, UsersRepository } from "../models/user.model";
+import prisma from '../../../database/prismaClient';
+import { UserProps, UsersRepository } from '../models/user.model';
 
 export class UsersDBRepository implements UsersRepository {
   private prisma = prisma;

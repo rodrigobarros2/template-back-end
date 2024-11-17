@@ -1,7 +1,8 @@
-import env from "./config/env";
-import { logger } from "../shared/utils/logger";
-import { setupApp } from "./config/app";
-import { createHttpTerminator } from "http-terminator";
+import 'dotenv/config';
+import env from './config/env';
+import { logger } from '../shared/utils/logger';
+import { setupApp } from './config/app';
+import { createHttpTerminator } from 'http-terminator';
 
 export const app = setupApp();
 

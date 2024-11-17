@@ -1,5 +1,5 @@
-import { HttpCode } from "../../../shared/enum/httpCode.enum";
-import { UserProps, UsersRepository } from "../models/user.model";
+import { HttpCode } from '../../../shared/enum/httpCode.enum';
+import { UserProps, UsersRepository } from '../models/user.model';
 
 export class CreateUserService {
   constructor(private readonly userRepository: UsersRepository) {}
@@ -8,7 +8,10 @@ export class CreateUserService {
     const createdUser = await this.userRepository.create(user);
 
     if (!createdUser) {
-      throw { status: HttpCode.NOT_FOUND, message: "A criação do usuário falhou" };
+      throw {
+        status: HttpCode.NOT_FOUND,
+        message: 'A criação do usuário falhou',
+      };
     }
 
     return createdUser;
