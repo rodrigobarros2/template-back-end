@@ -107,6 +107,6 @@
 
     "outDir": "./dist" // pasta de saída para os arquivos compilados
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx", "src/shared/utils/testRedisConnection.js"],
   "exclude": ["node_modules"]
 }

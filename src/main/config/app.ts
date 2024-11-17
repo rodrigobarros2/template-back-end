@@ -18,7 +18,7 @@ export const setupApp = () => {
 
   app.use(helmet());
 
-  app.use(pinoHttp({ logger }));
+  //app.use(pinoHttp({ logger }));
 
   app.use("/api", routes);
 
