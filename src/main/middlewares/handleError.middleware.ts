@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from "@prisma/client/runtime/library";
-import { HttpCode } from "../../shared/utils/httpCode";
+import { HttpCode } from "../../shared/enum/httpCode.enum";
 
 export function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
   console.error("Erro detectado:", err);

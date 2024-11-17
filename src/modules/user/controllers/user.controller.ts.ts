@@ -5,7 +5,7 @@ import { DeleteUserService } from "../services/delete-users.service";
 import { GetOneUserService } from "../services/getone-users.service";
 import { CreateUserService } from "../services/create-users.service";
 import { UpdateUserService } from "../services/update-users.service";
-import { HttpCode } from "../../../shared/utils/httpCode";
+import { HttpCode } from "../../../shared/enum/httpCode.enum";
 
 class UserController {
   static async findAll(request: Request, response: Response) {

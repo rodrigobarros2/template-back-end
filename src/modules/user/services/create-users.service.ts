@@ -1,4 +1,4 @@
-import { HttpCode } from "../../../shared/utils/httpCode";
+import { HttpCode } from "../../../shared/enum/httpCode.enum";
 import { UserProps, UsersRepository } from "../models/user.model";
 
 export class CreateUserService {

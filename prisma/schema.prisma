@@ -7,13 +7,50 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+  EMPLOYEE
+}
+
 model User {
-  id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String       @id @default(cuid())
+  name       String
+  email      String       @unique
+  password   String
+  role       Role         @default(USER)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  Session    Session[]
+  OtpRequest OtpRequest[]
 
   @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique // JWT ou outro token de sessão
+  createdAt DateTime @default(now())
+  expiresAt DateTime // Data de expiração do token
+
+  // Relacionamentos
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("sessions")
+}
+
+model OtpRequest {
+  id        String   @id @default(cuid())
+  userId    String
+  code      String // Código OTP gerado
+  type      String // Exemplo: "recovery", "login"
+  createdAt DateTime @default(now())
+  expiresAt DateTime // Validade do código
+  used      Boolean  @default(false) // Marca se o código já foi usado
+
+  // Relacionamentos
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("otp_requests")
 }
