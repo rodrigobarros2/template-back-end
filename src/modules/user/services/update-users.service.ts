@@ -4,7 +4,7 @@ import { UserProps, UsersRepository } from '../models/user.model';
 export class UpdateUserService {
   constructor(private readonly userRepository: UsersRepository) {}
 
-  public async perform(id: string, user: Partial<UserProps>) {
+  public async perform(id: string, user: Partial<UserProps>): Promise<{ id: string }> {
     const existingUser = await this.userRepository.getById(id);
 
     if (!existingUser) {
@@ -17,6 +17,7 @@ export class UpdateUserService {
     };
 
     const updatedUser = await this.userRepository.update(id, updatedUserProps);
+
     if (!updatedUser) {
       throw {
         status: HttpCode.INTERNAL_SERVER_ERROR,

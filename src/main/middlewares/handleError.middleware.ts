@@ -1,41 +1,51 @@
 import { Request, Response, NextFunction } from 'express';
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime/library';
 import { HttpCode } from '../../shared/enum/httpCode.enum';
+import { logger } from '../../shared/utils/logger';
 
-export function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
-  console.error('Erro detectado:', err);
+interface CustomError extends Error {
+  status?: number;
+}
+
+export function errorHandler(err: CustomError, req: Request, res: Response, next: NextFunction): void {
+  logger.error('Erro detectado:', err);
 
   if (err instanceof PrismaClientKnownRequestError) {
     switch (err.code) {
       case 'P2002':
-        return res.status(HttpCode.CONFLICT).json({
+        res.status(HttpCode.CONFLICT).json({
           error: { message: 'Usuário já cadastrado', field: err.meta?.target },
         });
+        return;
       case 'P2003':
-        return res.status(HttpCode.BAD_REQUEST).json({
+        res.status(HttpCode.BAD_REQUEST).json({
           error: {
             message: 'Erro de chave estrangeira',
             details: err.meta?.target,
           },
         });
+        return;
       case 'P2025':
-        return res.status(HttpCode.NOT_FOUND).json({
+        res.status(HttpCode.NOT_FOUND).json({
           error: {
             message: 'Registro não encontrado',
             details: err.meta?.cause,
           },
         });
+        return;
       default:
-        return res.status(HttpCode.BAD_REQUEST).json({
+        res.status(HttpCode.BAD_REQUEST).json({
           error: { message: 'Erro no banco de dados', details: err.message },
         });
+        return;
     }
   }
 
   if (err instanceof PrismaClientValidationError) {
-    return res.status(HttpCode.BAD_REQUEST).json({
+    res.status(HttpCode.BAD_REQUEST).json({
       error: { message: 'Erro de validação do Prisma', details: err.message },
     });
+    return;
   }
 
   const status = err.status || HttpCode.INTERNAL_SERVER_ERROR;

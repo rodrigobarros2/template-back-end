@@ -3,7 +3,7 @@ import { getCache, setCache } from '../../shared/utils/cache';
 import { logger } from '../../shared/utils/logger';
 
 const cacheMiddleware = (prefix: string, ttl: number = 3600) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
+  return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const cacheKey = `${prefix}:${req.originalUrl}`;
 
     try {
@@ -11,21 +11,22 @@ const cacheMiddleware = (prefix: string, ttl: number = 3600) => {
 
       if (cachedData) {
         logger.info('Resposta servida pelo cache');
-        return res.json(cachedData);
+        res.json(cachedData);
+        return;
       }
 
       const originalJson = res.json.bind(res);
 
-      res.json = (body: any) => {
+      res.json = (body: unknown) => {
         setCache(cacheKey, body, ttl).catch((error) => {
-          console.error('Erro ao salvar no cache:', error);
+          logger.error('Erro ao salvar no cache:', error);
         });
         return originalJson(body);
       };
 
       next();
     } catch (error) {
-      console.error('Erro no middleware de cache:', error);
+      logger.error('Erro no middleware de cache:', error);
       next();
     }
   };

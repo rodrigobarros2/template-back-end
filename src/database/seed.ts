@@ -1,10 +1,11 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
+import { logger } from '../shared/utils/logger';
 
 const prisma = new PrismaClient();
 
-async function main() {
-  console.log('Seeding database...');
+async function main(): Promise<void> {
+  logger.info('Seeding database...');
 
   const hashedPassword = await bcrypt.hash('secure_password', 10);
 
@@ -19,12 +20,12 @@ async function main() {
     },
   });
 
-  console.log('Seeding completed!');
+  logger.info('Seeding completed!');
 }
 
 main()
   .catch((e) => {
-    console.error(e);
+    logger.error(e);
     process.exit(1);
   })
   .finally(async () => {

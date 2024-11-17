@@ -8,7 +8,7 @@ const CACHE_TTL_IN_SECONDS = 3600; // 1 hora
 const REFRESH_TOKEN_TTL_IN_SECONDS = 7 * 24 * 3600; // 7 dias
 
 export class LoginService {
-  static async login(email: string, password: string) {
+  static async login(email: string, password: string): Promise<{ token: string; refreshToken: string; user: string }> {
     logger.info(`Tentativa de login para o email: ${email}`);
 
     const cachedUser = await redisClient.get(`user:${email}`);

@@ -1,18 +1,18 @@
 import { HttpCode } from '../../../shared/enum/httpCode.enum';
 import { getCache, setCache } from '../../../shared/utils/cache';
 import { logger } from '../../../shared/utils/logger';
-import { UsersRepository } from '../models/user.model';
+import { UserProps, UsersRepository } from '../models/user.model';
 
 export class GetAllUsersService {
   constructor(private readonly userRepository: UsersRepository) {}
 
-  public async perform() {
+  public async perform(): Promise<UserProps[]> {
     const cacheKey = 'users:all';
 
     const cachedUsers = await getCache(cacheKey);
     if (cachedUsers) {
       logger.info('Usuários servidos do cache');
-      return cachedUsers;
+      return cachedUsers as UserProps[];
     }
 
     const users = await this.userRepository.getAll();

@@ -5,9 +5,7 @@ if (!env.jwtSecret || !env.jwtRefreshSecret) {
   throw new Error('JWT_SECRET or JWT_REFRESH_SECRET is not defined');
 }
 
-export const generateToken = (payload: object, expiresIn: string | number = '1h') => {
-  console.log('🚀 ~ generateToken ~ payload:', payload);
-
+export const generateToken = (payload: object, expiresIn: string | number = '1h'): string => {
   if (!env.jwtSecret) {
     throw new Error('JWT_SECRET is not defined');
   }
@@ -15,9 +13,7 @@ export const generateToken = (payload: object, expiresIn: string | number = '1h'
   return jwt.sign(payload, env.jwtSecret, { expiresIn });
 };
 
-export const generateRefreshToken = (payload: object, expiresIn: string | number = '7d') => {
-  console.log('🚀 ~ generateRefreshToken ~ payload:', payload);
-
+export const generateRefreshToken = (payload: object, expiresIn: string | number = '7d'): string => {
   if (!env.jwtRefreshSecret) {
     throw new Error('JWT_REFRESH_SECRET is not defined');
   }
@@ -25,25 +21,25 @@ export const generateRefreshToken = (payload: object, expiresIn: string | number
   return jwt.sign(payload, env.jwtRefreshSecret, { expiresIn });
 };
 
-export const verifyToken = (token: string) => {
+export const verifyToken = (token: string): string | object => {
   try {
     if (!env.jwtSecret) {
       throw new Error('JWT_SECRET is not defined');
     }
 
     return jwt.verify(token, env.jwtSecret);
-  } catch (error) {
+  } catch {
     throw new Error('Invalid or expired token');
   }
 };
 
-export const verifyRefreshToken = (refreshToken: string) => {
+export const verifyRefreshToken = (refreshToken: string): string | object => {
   try {
     if (!env.jwtRefreshSecret) {
       throw new Error('JWT_REFRESH_SECRET is not defined');
     }
     return jwt.verify(refreshToken, env.jwtRefreshSecret);
-  } catch (error) {
+  } catch {
     throw new Error('Invalid or expired refresh token');
   }
 };

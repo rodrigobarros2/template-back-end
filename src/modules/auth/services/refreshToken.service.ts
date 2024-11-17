@@ -6,7 +6,7 @@ import { logger } from '../../../shared/utils/logger';
 const REFRESH_TOKEN_TTL_IN_SECONDS = 7 * 24 * 3600; // 7 dias
 
 export class RefreshTokenService {
-  static async refresh(refreshToken: string) {
+  static async refresh(refreshToken: string): Promise<{ accessToken: string; refreshToken: string }> {
     if (!refreshToken) {
       throw new Error('Refresh token é obrigatório');
     }

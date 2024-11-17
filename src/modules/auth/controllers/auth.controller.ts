@@ -5,7 +5,7 @@ import { LoginService } from '../services/login.service';
 import { RefreshTokenService } from '../services/refreshToken.service';
 
 export class AuthController {
-  static async register(req: Request, res: Response) {
+  static async register(req: Request, res: Response): Promise<void> {
     const { name, email, password } = req.body;
 
     const result = await RegisterService.register(name, email, password);
@@ -17,7 +17,7 @@ export class AuthController {
     });
   }
 
-  static async login(req: Request, res: Response) {
+  static async login(req: Request, res: Response): Promise<void> {
     const { email, password } = req.body;
     const result = await LoginService.login(email, password);
 
@@ -28,11 +28,12 @@ export class AuthController {
     });
   }
 
-  static async refreshToken(req: Request, res: Response) {
+  static async refreshToken(req: Request, res: Response): Promise<void> {
     const { refreshToken } = req.body;
 
     if (!refreshToken) {
-      return res.status(HttpCode.NOT_FOUND).json({ error: 'No refresh token provided' });
+      res.status(HttpCode.NOT_FOUND).json({ error: 'No refresh token provided' });
+      return;
     }
 
     const tokens = await RefreshTokenService.refresh(refreshToken);

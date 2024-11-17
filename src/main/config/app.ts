@@ -2,12 +2,12 @@ import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import routes from './routes';
-import pinoHttp from 'pino-http';
-import { logger } from '../../shared/utils/logger';
+//import pinoHttp from 'pino-http';
+//import { logger } from '../../shared/utils/logger';
 import { errorHandler } from '../middlewares/handleError.middleware';
 import 'dotenv/config';
 
-export const setupApp = () => {
+export const setupApp = (): Application => {
   const app: Application = express();
 
   app.use(express.json());

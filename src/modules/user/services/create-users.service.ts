@@ -4,7 +4,7 @@ import { UserProps, UsersRepository } from '../models/user.model';
 export class CreateUserService {
   constructor(private readonly userRepository: UsersRepository) {}
 
-  public async perform(user: UserProps) {
+  public async perform(user: UserProps): Promise<{ id: string }> {
     const createdUser = await this.userRepository.create(user);
 
     if (!createdUser) {

@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { UsersDBRepository } from '../repositories/user.repository';
 import { GetAllUsersService } from '../services/getall-users.service';
 import { DeleteUserService } from '../services/delete-users.service';
@@ -8,7 +8,7 @@ import { UpdateUserService } from '../services/update-users.service';
 import { HttpCode } from '../../../shared/enum/httpCode.enum';
 
 class UserController {
-  static async findAll(request: Request, response: Response) {
+  static async findAll(request: Request, response: Response): Promise<void> {
     const userService = new GetAllUsersService(new UsersDBRepository());
 
     const result = await userService.perform();
@@ -20,7 +20,7 @@ class UserController {
     });
   }
 
-  static async findOne(request: Request, response: Response) {
+  static async findOne(request: Request, response: Response): Promise<void> {
     const userService = new GetOneUserService(new UsersDBRepository());
 
     const result = await userService.perform(request.params.id);
@@ -32,7 +32,7 @@ class UserController {
     });
   }
 
-  static async create(request: Request, response: Response, next: NextFunction) {
+  static async create(request: Request, response: Response): Promise<void> {
     const userService = new CreateUserService(new UsersDBRepository());
     const user = request.body;
 
@@ -45,7 +45,7 @@ class UserController {
     });
   }
 
-  static async update(request: Request, response: Response) {
+  static async update(request: Request, response: Response): Promise<void> {
     const userService = new UpdateUserService(new UsersDBRepository());
 
     const updateDto = request.body;
@@ -59,7 +59,7 @@ class UserController {
     });
   }
 
-  static async remove(request: Request, response: Response) {
+  static async remove(request: Request, response: Response): Promise<void> {
     const userService = new DeleteUserService(new UsersDBRepository());
 
     await userService.perform(request.params.id);

@@ -4,7 +4,7 @@ import { UsersRepository } from '../models/user.model';
 export class DeleteUserService {
   constructor(private readonly userRepository: UsersRepository) {}
 
-  public async perform(id: string) {
+  public async perform(id: string): Promise<void> {
     const user = await this.userRepository.getById(id);
     if (!user) {
       throw { status: HttpCode.NOT_FOUND, message: 'Usuário não encontrado' };

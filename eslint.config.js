@@ -36,7 +36,7 @@ export default [
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-non-null-assertion': 'error',
 
-      // General rules
+      //General rules
       'no-console': 'warn',
       semi: ['error', 'always'],
       quotes: ['error', 'single'],
