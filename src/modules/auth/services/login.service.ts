@@ -3,12 +3,13 @@ import prisma from '../../../database/prismaClient';
 import redisClient from '../../../main/config/redis';
 import { generateToken, generateRefreshToken } from '../../../shared/utils/jwt';
 import { logger } from '../../../shared/utils/logger';
+import { LoginResponse, User } from '../models/auth.model';
 
 const CACHE_TTL_IN_SECONDS = 3600; // 1 hora
 const REFRESH_TOKEN_TTL_IN_SECONDS = 7 * 24 * 3600; // 7 dias
 
 export class LoginService {
-  static async login(email: string, password: string): Promise<{ token: string; refreshToken: string; user: string }> {
+  static async login(email: string, password: string): Promise<LoginResponse> {
     logger.info(`Tentativa de login para o email: ${email}`);
 
     const cachedUser = await redisClient.get(`user:${email}`);
@@ -20,7 +21,7 @@ export class LoginService {
       logger.info('Usuário não encontrado no cache, buscando no banco de dados...');
     }
 
-    const user = cachedUser ? JSON.parse(cachedUser) : await prisma.user.findUnique({ where: { email } });
+    const user: User = cachedUser ? JSON.parse(cachedUser) : await prisma.user.findUnique({ where: { email } });
 
     if (!user) throw new Error('User not found');
 
@@ -50,6 +51,14 @@ export class LoginService {
 
     logger.info(`Token gerado e armazenado no cache para o usuário ${user.email}: ${token}`);
 
-    return { token, refreshToken, user };
+    return {
+      token,
+      refreshToken,
+      user: {
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    };
   }
 }
