@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { UsersDBRepository } from './user.repository';
 import { UserProps } from '../models/user.model';

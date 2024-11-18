@@ -4,7 +4,6 @@ import { loginRateLimiter } from '../middlewares/rateLimit.middleware';
 
 const router = Router();
 
-router.post('/register', AuthController.register);
 router.post('/login', loginRateLimiter, AuthController.login);
-router.post('/refresh-token', AuthController.refreshToken);
+router.post('/refresh-token', loginRateLimiter, AuthController.refreshToken);
 export default router;

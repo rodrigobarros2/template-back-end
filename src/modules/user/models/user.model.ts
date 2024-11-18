@@ -1,9 +1,12 @@
+import { UserRole } from '../../../shared/enum/roles.enum';
+
 export interface UsersRepository {
   create(user: UserProps): Promise<{ id: string }>;
   update(id: string, user: UserProps): Promise<{ id: string }>;
   getById(id: string): Promise<UserProps | null>;
   getAll(): Promise<UserProps[]>;
   delete(id: string): Promise<boolean>;
+  getByEmail(email: string): Promise<UserProps | null>;
 }
 
 export interface UserProps {
@@ -11,4 +14,14 @@ export interface UserProps {
   name: string;
   email: string;
   password: string;
+  role: UserRole;
+}
+
+export interface RegisterResponse {
+  user: {
+    name: string;
+    email: string;
+    role: string;
+  };
+  token: string;
 }

@@ -10,13 +10,7 @@ const router = Router();
 
 router.get('/', authenticate, authorize([UserRole.ADMIN, UserRole.USER, UserRole.EMPLOYEE]), UserController.findAll);
 
-router.post(
-  '/',
-  authenticate,
-  authorize([UserRole.ADMIN, UserRole.USER, UserRole.EMPLOYEE]),
-  validate(CreateUserSchema),
-  UserController.create,
-);
+router.post('/', validate(CreateUserSchema), UserController.create);
 
 router.get('/:id', authenticate, authorize([UserRole.ADMIN, UserRole.USER, UserRole.EMPLOYEE]), UserController.findOne);
 

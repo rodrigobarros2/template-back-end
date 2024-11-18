@@ -17,12 +17,3 @@ export interface LoginResponse {
     role: string;
   };
 }
-
-export interface RegisterResponse {
-  user: {
-    name: string;
-    email: string;
-    role: string;
-  };
-  token: string;
-}

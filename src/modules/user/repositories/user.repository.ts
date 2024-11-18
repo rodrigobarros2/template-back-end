@@ -1,4 +1,5 @@
 import prisma from '../../../database/prismaClient';
+import { UserRole } from '../../../shared/enum/roles.enum';
 import { UserProps, UsersRepository } from '../models/user.model';
 
 export class UsersDBRepository implements UsersRepository {
@@ -22,6 +23,7 @@ export class UsersDBRepository implements UsersRepository {
       name: user.name,
       email: user.email,
       password: user.password,
+      role: user.role as UserRole,
     }));
   }
 
@@ -47,6 +49,7 @@ export class UsersDBRepository implements UsersRepository {
       name: user.name,
       email: user.email,
       password: user.password,
+      role: user.role as UserRole,
     };
   }
 
@@ -55,5 +58,23 @@ export class UsersDBRepository implements UsersRepository {
       where: { id },
     });
     return true;
+  }
+
+  async getByEmail(email: string): Promise<UserProps | null> {
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      role: user.role as UserRole,
+    };
   }
 }

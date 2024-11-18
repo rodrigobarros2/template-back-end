@@ -1,26 +1,38 @@
-import prisma from '../../../database/prismaClient';
 import redisClient from '../../../main/config/redis';
+import { HttpCode } from '../../../shared/enum/httpCode.enum';
 import { generateToken, generateRefreshToken } from '../../../shared/utils/jwt';
 import { logger } from '../../../shared/utils/logger';
+import { UsersRepository } from '../../user/models/user.model';
 
 const REFRESH_TOKEN_TTL_IN_SECONDS = 7 * 24 * 3600; // 7 dias
 
 export class RefreshTokenService {
-  static async refresh(refreshToken: string): Promise<{ accessToken: string; refreshToken: string }> {
+  constructor(private readonly userRepository: UsersRepository) {}
+
+  async perform(refreshToken: string): Promise<{ accessToken: string; refreshToken: string }> {
     if (!refreshToken) {
-      throw new Error('Refresh token é obrigatório');
+      throw {
+        status: HttpCode.UNAUTHORIZED,
+        message: 'Refresh token é obrigatório',
+      };
     }
 
     const cachedToken = await redisClient.get(`refreshToken:${refreshToken}`);
     if (!cachedToken) {
-      throw new Error('Refresh token inválido ou expirado');
+      throw {
+        status: HttpCode.UNAUTHORIZED,
+        message: 'Refresh token inválido ou expirado',
+      };
     }
 
     const userId = cachedToken;
-    const user = await prisma.user.findUnique({ where: { id: userId } });
+    const user = await this.userRepository.getById(userId);
 
     if (!user) {
-      throw new Error('Usuário não encontrado');
+      throw {
+        status: HttpCode.NOT_FOUND,
+        message: 'Usuário não encontrado',
+      };
     }
 
     logger.info('Usuário encontrado para renovação de token:', {
@@ -41,6 +53,13 @@ export class RefreshTokenService {
       name: user.name,
       role: user.role,
     });
+
+    if (!user.id) {
+      throw {
+        status: HttpCode.INTERNAL_SERVER_ERROR,
+        message: 'User ID is undefined',
+      };
+    }
 
     await redisClient.set(`refreshToken:${newRefreshToken}`, user.id, {
       EX: REFRESH_TOKEN_TTL_IN_SECONDS,
