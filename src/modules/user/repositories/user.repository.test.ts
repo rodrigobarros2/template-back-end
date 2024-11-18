@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { UsersDBRepository } from './user.repository';
 import { UserProps } from '../models/user.model';
+import { UserRole } from '../../../shared/enum/roles.enum';
 
 vi.mock('@prisma/client', () => {
   const Decimal = vi.fn().mockImplementation((value) => ({
@@ -40,6 +42,7 @@ describe('UsersDBRepository', () => {
         name: 'User 1',
         email: 'user1@example.com',
         password: 'password123',
+        role: 'ADMIN' as UserRole,
       };
 
       mockPrisma.user.create.mockResolvedValue({ id: '1' });
@@ -64,6 +67,7 @@ describe('UsersDBRepository', () => {
         name: 'User 1',
         email: 'user1@example.com',
         password: 'password123',
+        role: 'USER' as UserRole,
       };
       mockPrisma.user.findUnique.mockResolvedValue(mockUser);
 
@@ -95,12 +99,14 @@ describe('UsersDBRepository', () => {
           name: 'User 1',
           email: 'user1@example.com',
           password: 'password123',
+          role: 'USER' as UserRole,
         },
         {
           id: '2',
           name: 'User 2',
           email: 'user2@example.com',
           password: 'password456',
+          role: 'USER' as UserRole,
         },
       ];
       mockPrisma.user.findMany.mockResolvedValue(mockUsers);

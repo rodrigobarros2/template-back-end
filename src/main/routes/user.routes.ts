@@ -1,10 +1,10 @@
-import UserController from '../../modules/user/controllers/user.controller.ts';
 import validate from '../middlewares/validate.middleware';
 import { Router } from 'express';
 import { UserRole } from '../../shared/enum/roles.enum';
 import { authorize } from '../middlewares/authorize.middleware';
 import { authenticate } from '../middlewares/auth.middleware';
 import { CreateUserSchema } from '../middlewares/schema/user.schema';
+import UserController from '../../modules/user/controllers/user.controller';
 
 const router = Router();
 

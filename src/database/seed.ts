@@ -1,20 +1,21 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { logger } from '../shared/utils/logger';
+import env from '../main/config/env';
 
 const prisma = new PrismaClient();
 
 async function main(): Promise<void> {
   logger.info('Seeding database...');
 
-  const hashedPassword = await bcrypt.hash('secure_password', 10);
+  const hashedPassword = await bcrypt.hash(env.jwtSeedDb, 10);
 
   await prisma.user.upsert({
-    where: { email: 'admin@example.com' },
+    where: { email: 'rodrigobarros@hotmail.com.com' },
     update: {},
     create: {
-      email: 'admin@example.com',
-      name: 'Admin User',
+      email: 'rodrigobarros@hotmail.com.com',
+      name: 'Rodrigo Barros',
       password: hashedPassword,
       role: 'ADMIN',
     },
