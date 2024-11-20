@@ -1,4 +1,4 @@
-import { HttpCode } from '../../../shared/enum/httpCode.enum';
+import { HttpCode } from '../../../constants/httpCode.enum';
 import { getCache, setCache } from '../../../shared/utils/cache';
 import { logger } from '../../../shared/utils/logger';
 import { UserProps, UsersRepository } from '../models/user.model';

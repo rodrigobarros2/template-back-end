@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { HttpCode } from '../../../shared/enum/httpCode.enum';
+import { HttpCode } from '../../../constants/httpCode.enum';
 import { LoginService } from '../services/login.service';
 import { RefreshTokenService } from '../services/refreshToken.service';
 import { UsersDBRepository } from '../../user/repositories/user.repository';

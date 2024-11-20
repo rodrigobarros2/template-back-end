@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken } from '../../shared/utils/jwt';
-import { UserRole } from '../../shared/enum/roles.enum';
-import { HttpCode } from '../../shared/enum/httpCode.enum';
+import { UserRole } from '../../constants/roles.enum';
+import { HttpCode } from '../../constants/httpCode.enum';
 import prisma from '../../database/prismaClient';
 
 interface DecodedToken {

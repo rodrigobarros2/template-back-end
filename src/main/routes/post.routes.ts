@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { authenticate } from '../middlewares/auth.middleware';
 import { authorize } from '../middlewares/authorize.middleware';
-import { UserRole } from '../../shared/enum/roles.enum';
+import { UserRole } from '../../constants/roles.enum';
 import { PostController } from '../../modules/post/controller/post.controller';
 import { CreatePostSchema } from '../middlewares/schema/post.schema';
 import validate from '../middlewares/validate.middleware';

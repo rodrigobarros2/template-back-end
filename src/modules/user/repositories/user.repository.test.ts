@@ -2,7 +2,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { UsersDBRepository } from './user.repository';
 import { UserProps } from '../models/user.model';
-import { UserRole } from '../../../shared/enum/roles.enum';
+import { UserRole } from '../../../constants/roles.enum';
 
 vi.mock('@prisma/client', () => {
   const Decimal = vi.fn().mockImplementation((value) => ({

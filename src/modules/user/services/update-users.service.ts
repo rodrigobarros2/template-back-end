@@ -1,4 +1,4 @@
-import { HttpCode } from '../../../shared/enum/httpCode.enum';
+import { HttpCode } from '../../../constants/httpCode.enum';
 import { UserProps, UsersRepository } from '../models/user.model';
 
 export class UpdateUserService {

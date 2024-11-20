@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { AnyZodObject } from 'zod';
-import { HttpCode } from '../../shared/enum/httpCode.enum';
+import { HttpCode } from '../../constants/httpCode.enum';
 
 const validate =
   (schema: AnyZodObject): ((request: Request, response: Response, next: NextFunction) => Promise<void>) =>

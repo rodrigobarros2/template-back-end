@@ -4,7 +4,7 @@ import { generateToken, generateRefreshToken } from '../../../shared/utils/jwt';
 import { logger } from '../../../shared/utils/logger';
 import { LoginResponse, User } from '../models/auth.model';
 import { UsersRepository } from '../../user/models/user.model';
-import { HttpCode } from '../../../shared/enum/httpCode.enum';
+import { HttpCode } from '../../../constants/httpCode.enum';
 
 const CACHE_TTL_IN_SECONDS = 3600; // 1 hora
 const REFRESH_TOKEN_TTL_IN_SECONDS = 7 * 24 * 3600; // 7 dias

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { UserRole } from '../../shared/enum/roles.enum';
-import { HttpCode } from '../../shared/enum/httpCode.enum';
+import { UserRole } from '../../constants/roles.enum';
+import { HttpCode } from '../../constants/httpCode.enum';
 
 export const authorize = (roles: UserRole[]) => {
   return (req: Request, res: Response, next: NextFunction): void => {

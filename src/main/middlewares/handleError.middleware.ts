@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime/library';
-import { HttpCode } from '../../shared/enum/httpCode.enum';
+import { HttpCode } from '../../constants/httpCode.enum';
 import { logger } from '../../shared/utils/logger';
 
 interface CustomError extends Error {

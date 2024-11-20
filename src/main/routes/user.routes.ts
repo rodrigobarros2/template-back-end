@@ -1,6 +1,6 @@
 import validate from '../middlewares/validate.middleware';
 import { Router } from 'express';
-import { UserRole } from '../../shared/enum/roles.enum';
+import { UserRole } from '../../constants/roles.enum';
 import { authorize } from '../middlewares/authorize.middleware';
 import { authenticate } from '../middlewares/auth.middleware';
 import { CreateUserSchema } from '../middlewares/schema/user.schema';

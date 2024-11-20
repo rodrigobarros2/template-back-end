@@ -1,4 +1,4 @@
-export enum HttpCode {
+export const enum HttpCode {
   OK = 200,
   CREATED = 201,
   ACCEPTED = 202,

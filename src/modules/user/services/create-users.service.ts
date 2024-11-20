@@ -2,9 +2,9 @@ import bcrypt from 'bcrypt';
 import redisClient from '../../../main/config/redis';
 import { logger } from '../../../shared/utils/logger';
 import { generateToken } from '../../../shared/utils/jwt';
-import { HttpCode } from '../../../shared/enum/httpCode.enum';
+import { HttpCode } from '../../../constants/httpCode.enum';
 import { RegisterResponse, UserProps, UsersRepository } from '../models/user.model';
-import { UserRole } from '../../../shared/enum/roles.enum';
+import { UserRole } from '../../../constants/roles.enum';
 
 const CACHE_TTL_IN_SECONDS = 3600;
 

@@ -6,7 +6,7 @@ import {
   createUserService,
   updateUserService,
 } from '../services/_instances.js';
-import { HttpCode } from '../../../shared/enum/httpCode.enum';
+import { HttpCode } from '../../../constants/httpCode.enum.js';
 
 class UserController {
   static async findAll(request: Request, response: Response): Promise<void> {

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import env from '../../main/config/env';
-import { HttpCode } from '../enum/httpCode.enum';
+import { HttpCode } from '../../constants/httpCode.enum';
 
 if (!env.jwtSecret || !env.jwtRefreshSecret) {
   throw {

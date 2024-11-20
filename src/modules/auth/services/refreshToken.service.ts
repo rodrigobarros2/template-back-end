@@ -1,5 +1,5 @@
 import redisClient from '../../../main/config/redis';
-import { HttpCode } from '../../../shared/enum/httpCode.enum';
+import { HttpCode } from '../../../constants/httpCode.enum';
 import { generateToken, generateRefreshToken } from '../../../shared/utils/jwt';
 import { logger } from '../../../shared/utils/logger';
 import { UsersRepository } from '../../user/models/user.model';

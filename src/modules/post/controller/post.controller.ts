@@ -1,4 +1,4 @@
-import { HttpCode } from '../../../shared/enum/httpCode.enum';
+import { HttpCode } from '../../../constants/httpCode.enum';
 import { Request, Response } from 'express';
 
 import {

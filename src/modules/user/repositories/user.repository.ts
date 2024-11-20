@@ -1,5 +1,5 @@
 import prisma from '../../../database/prismaClient';
-import { UserRole } from '../../../shared/enum/roles.enum';
+import { UserRole } from '../../../constants/roles.enum';
 import { UserProps, UsersRepository } from '../models/user.model';
 
 export class UsersDBRepository implements UsersRepository {
