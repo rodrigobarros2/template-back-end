@@ -1,18 +1,18 @@
 import { HttpCode } from '../../../shared/enum/httpCode.enum';
 import { Request, Response } from 'express';
-import { PostsDBRepository } from '../repositories/post.repository';
-import { CreatePostService } from '../services/create-post.service';
-import { UpdatePostService } from '../services/update-post.service';
-import { GetAllPostService } from '../services/getall-post.service';
-import { GetOnePostService } from '../services/getone-post.service';
-import { DeletePostService } from '../services/delete-post.service';
+
+import {
+  createPostService,
+  deletePostService,
+  getAllPostsService,
+  getOnePostService,
+  updatePostService,
+} from '../services/_instances';
 
 export class PostController {
   static async create(req: Request, res: Response): Promise<void> {
-    const userService = new CreatePostService(new PostsDBRepository());
-
     const post = req.body;
-    const result = await userService.perform(post);
+    const result = await createPostService.perform(post);
 
     res.status(HttpCode.CREATED).json({
       response: 'success',
@@ -22,10 +22,8 @@ export class PostController {
   }
 
   static async update(req: Request, res: Response): Promise<void> {
-    const userService = new UpdatePostService(new PostsDBRepository());
-
     const post = req.body;
-    const result = await userService.perform(req.params.id, post);
+    const result = await updatePostService.perform(req.params.id, post);
 
     res.status(HttpCode.OK).json({
       response: 'success',
@@ -35,9 +33,7 @@ export class PostController {
   }
 
   static async findOne(req: Request, res: Response): Promise<void> {
-    const userService = new GetOnePostService(new PostsDBRepository());
-
-    const result = await userService.perform(req.params.id);
+    const result = await getOnePostService.perform(req.params.id);
 
     res.status(HttpCode.OK).json({
       response: 'success',
@@ -47,9 +43,7 @@ export class PostController {
   }
 
   static async findAll(req: Request, res: Response): Promise<void> {
-    const userService = new GetAllPostService(new PostsDBRepository());
-
-    const result = await userService.perform();
+    const result = await getAllPostsService.perform();
 
     res.status(HttpCode.OK).json({
       response: 'success',
@@ -59,9 +53,7 @@ export class PostController {
   }
 
   static async remove(req: Request, res: Response): Promise<void> {
-    const userService = new DeletePostService(new PostsDBRepository());
-
-    await userService.perform(req.params.id);
+    await deletePostService.perform(req.params.id);
 
     res.status(HttpCode.OK).json({
       response: 'success',

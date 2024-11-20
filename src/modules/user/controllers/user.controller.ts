@@ -1,17 +1,16 @@
 import { Request, Response } from 'express';
-import { UsersDBRepository } from '../repositories/user.repository';
-import { GetAllUsersService } from '../services/getall-users.service';
-import { DeleteUserService } from '../services/delete-users.service';
-import { GetOneUserService } from '../services/getone-users.service';
-import { CreateUserService } from '../services/create-users.service';
-import { UpdateUserService } from '../services/update-users.service';
+import {
+  getAllUsersService,
+  deleteUserService,
+  getOneUserService,
+  createUserService,
+  updateUserService,
+} from '../services/_instances.js';
 import { HttpCode } from '../../../shared/enum/httpCode.enum';
 
 class UserController {
   static async findAll(request: Request, response: Response): Promise<void> {
-    const userService = new GetAllUsersService(new UsersDBRepository());
-
-    const result = await userService.perform();
+    const result = await getAllUsersService.perform();
 
     response.status(HttpCode.OK).json({
       response: 'successfull',
@@ -21,9 +20,7 @@ class UserController {
   }
 
   static async findOne(request: Request, response: Response): Promise<void> {
-    const userService = new GetOneUserService(new UsersDBRepository());
-
-    const result = await userService.perform(request.params.id);
+    const result = await getOneUserService.perform(request.params.id);
 
     response.status(HttpCode.OK).json({
       response: 'successfull',
@@ -33,10 +30,9 @@ class UserController {
   }
 
   static async create(request: Request, response: Response): Promise<void> {
-    const userService = new CreateUserService(new UsersDBRepository());
     const user = request.body;
 
-    const result = await userService.perform(user);
+    const result = await createUserService.perform(user);
 
     response.status(HttpCode.CREATED).json({
       response: 'success',
@@ -46,11 +42,9 @@ class UserController {
   }
 
   static async update(request: Request, response: Response): Promise<void> {
-    const userService = new UpdateUserService(new UsersDBRepository());
-
     const updateDto = request.body;
 
-    const result = await userService.perform(request.params.id, updateDto);
+    const result = await updateUserService.perform(request.params.id, updateDto);
 
     response.status(HttpCode.OK).json({
       response: 'successfull',
@@ -60,9 +54,7 @@ class UserController {
   }
 
   static async remove(request: Request, response: Response): Promise<void> {
-    const userService = new DeleteUserService(new UsersDBRepository());
-
-    await userService.perform(request.params.id);
+    await deleteUserService.perform(request.params.id);
 
     response.status(HttpCode.OK).json({
       response: 'successfull',

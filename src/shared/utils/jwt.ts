@@ -10,45 +10,17 @@ if (!env.jwtSecret || !env.jwtRefreshSecret) {
 }
 
 export const generateToken = (payload: object, expiresIn: string | number = '1h'): string => {
-  if (!env.jwtSecret) {
-    throw {
-      status: HttpCode.UNAUTHORIZED,
-      message: 'JWT_SECRET is not defined',
-    };
-  }
-
   return jwt.sign(payload, env.jwtSecret, { expiresIn });
 };
 
 export const generateRefreshToken = (payload: object, expiresIn: string | number = '7d'): string => {
-  if (!env.jwtRefreshSecret) {
-    throw {
-      status: HttpCode.UNAUTHORIZED,
-      message: 'JWT_REFRESH_SECRET is not defined',
-    };
-  }
-
   return jwt.sign(payload, env.jwtRefreshSecret, { expiresIn });
 };
 
 export const verifyToken = (token: string): string | object => {
-  if (!env.jwtSecret) {
-    throw {
-      status: HttpCode.UNAUTHORIZED,
-      message: 'JWT_REFRESH_SECRET is not defined',
-    };
-  }
-
   return jwt.verify(token, env.jwtSecret);
 };
 
 export const verifyRefreshToken = (refreshToken: string): string | object => {
-  if (!env.jwtRefreshSecret) {
-    throw {
-      status: HttpCode.UNAUTHORIZED,
-      message: 'JWT_REFRESH_SECRET is not defined',
-    };
-  }
-
   return jwt.verify(refreshToken, env.jwtRefreshSecret);
 };
