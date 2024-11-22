@@ -4,7 +4,7 @@ export interface UsersRepository {
   create(user: UserProps): Promise<{ id: string }>;
   update(id: string, user: UserProps): Promise<{ id: string }>;
   getById(id: string): Promise<UserProps | null>;
-  getAll(): Promise<UserProps[]>;
+  getAll(page: number, limit: number): Promise<UserProps[]>;
   delete(id: string): Promise<boolean>;
   getByEmail(email: string): Promise<UserProps | null>;
 }

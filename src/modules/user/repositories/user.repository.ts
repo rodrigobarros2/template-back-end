@@ -16,8 +16,11 @@ export class UsersDBRepository implements UsersRepository {
     return { id: createdUser.id };
   }
 
-  async getAll(): Promise<UserProps[]> {
-    const users = await this.prisma.user.findMany();
+  async getAll(page: number, limit: number): Promise<UserProps[]> {
+    const users = await this.prisma.user.findMany({
+      skip: (page - 1) * limit, // Pula os registros das páginas anteriores
+      take: limit, // Limita o número de registros retornados
+    });
     return users.map((user) => ({
       id: user.id,
       name: user.name,

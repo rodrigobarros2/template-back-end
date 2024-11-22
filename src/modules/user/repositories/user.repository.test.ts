@@ -111,7 +111,7 @@ describe('UsersDBRepository', () => {
       ];
       mockPrisma.user.findMany.mockResolvedValue(mockUsers);
 
-      const result = await repository.getAll();
+      const result = await repository.getAll(1, 10);
 
       expect(result).toEqual(mockUsers);
       expect(mockPrisma.user.findMany).toHaveBeenCalled();

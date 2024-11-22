@@ -10,7 +10,10 @@ import { HttpCode } from '../../../constants/httpCode.enum.js';
 
 class UserController {
   static async findAll(request: Request, response: Response): Promise<void> {
-    const result = await getAllUsersService.perform();
+    const page = parseInt(request.query.page as string) || 1;
+    const limit = parseInt(request.query.limit as string) || 10;
+
+    const result = await getAllUsersService.perform(page, limit);
 
     response.status(HttpCode.OK).json({
       response: 'successfull',
